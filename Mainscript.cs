@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////
 ///// Projet         : ROetIA-PathAlgo	     //////
 ///// Auteur         : Crew ACPL		     //////
-///// DerniÃ¨re Modif : 2013-12-01            //////
+///// Dernière Modif : 2013-12-01            //////
 ///////////////////////////////////////////////////
 
 using UnityEngine;
@@ -13,7 +13,7 @@ using System.IO;
 
 
 /// <summary>
-/// Classe principale Ã  utiliser pour implÃ©menter vos algorithmes
+/// Classe principale à utiliser pour implémenter vos algorithmes
 /// Si vous souhaitez utiliser plusieurs scripts (1 par algorithme), 
 /// vous le pouvez aussi.
 /// </summary>
@@ -21,7 +21,7 @@ public class MainScript : MonoBehaviour
 {
 
     /// <summary>
-    /// Indique si un algorithme est en cours d'exÃ©cution
+    /// Indique si un algorithme est en cours d'exécution
     /// </summary>
     private bool _isRunning = false;
 	private bool _wasTrue = false;
@@ -33,43 +33,43 @@ public class MainScript : MonoBehaviour
 	
 	private String _csvLog;
     /// <summary>
-    /// MÃ©thode utilisÃ©e pour gÃ©rer les informations et 
+    /// Méthode utilisée pour gérer les informations et 
     /// boutons de l'interface utilisateur
     /// </summary>
     public void OnGUI()
     {
-        // DÃ©marrage d'une liste de composants visuels verticale
+        // Démarrage d'une liste de composants visuels verticale
         GUILayout.BeginVertical();
 
-        // Affiche un bouton permettant le lancement de la recherche locale naÃ¯ve
+        // Affiche un bouton permettant le lancement de la recherche locale naïve
         if (GUILayout.Button("DEMARRAGE RECHERCHE LOCALE NAIVE"))
         {
-            // Le bouton est inactif si un algorithme est en cours d'exÃ©cution
+            // Le bouton est inactif si un algorithme est en cours d'exécution
             if (!_isRunning)
             {
-                // DÃ©marrage de la recherche locale naÃ¯ve en pseudo asynchrone
+                // Démarrage de la recherche locale naïve en pseudo asynchrone
                 StartCoroutine("NaiveLocalSearch");
             }
         }
 
-        // Affiche un bouton permettant le lancement de la recherche locale naÃ¯ve
+        // Affiche un bouton permettant le lancement de la recherche locale naïve
         if (GUILayout.Button("DEMARRAGE RECUIT SIMULE"))
         {
-            // Le bouton est inactif si un algorithme est en cours d'exÃ©cution
+            // Le bouton est inactif si un algorithme est en cours d'exécution
             if (!_isRunning)
             {
-                // DÃ©marrage du recuit simulÃ© en pseudo asynchrone
+                // Démarrage du recuit simulé en pseudo asynchrone
                 StartCoroutine("SimulatedAnnealing");
             }
         }
 
-        // Affiche un bouton permettant le lancement de l'algorithme gÃ©nÃ©tique
+        // Affiche un bouton permettant le lancement de l'algorithme génétique
         if (GUILayout.Button("DEMARRAGE ALGORITHME GENETIQUE"))
         {
-            // Le bouton est inactif si un algorithme est en cours d'exÃ©cution
+            // Le bouton est inactif si un algorithme est en cours d'exécution
             if (!_isRunning)
             {
-                // DÃ©marrage de l'algorithme gÃ©nÃ©tique en pseudo asynchrone
+                // Démarrage de l'algorithme génétique en pseudo asynchrone
              StartCoroutine(StartGenetic());
             }
         }
@@ -77,10 +77,10 @@ public class MainScript : MonoBehaviour
         // Affiche un bouton permettant le lancement de l'algorithme de Djikstra
         if (GUILayout.Button("DEMARRAGE DJIKSTRA"))
         {
-            // Le bouton est inactif si un algorithme est en cours d'exÃ©cution
+            // Le bouton est inactif si un algorithme est en cours d'exécution
             if (!_isRunning)
             {
-                // DÃ©marrage de l'algorithme de Djikstra en pseudo asynchrone
+                // Démarrage de l'algorithme de Djikstra en pseudo asynchrone
                 StartCoroutine("Djikstra");
             }
         }
@@ -88,10 +88,10 @@ public class MainScript : MonoBehaviour
         // Affiche un bouton permettant le lancement de l'algorithme A*
         if (GUILayout.Button("DEMARRAGE A*"))
         {
-            // Le bouton est inactif si un algorithme est en cours d'exÃ©cution
+            // Le bouton est inactif si un algorithme est en cours d'exécution
             if (!_isRunning)
             {
-                // DÃ©marrage de l'algorithme A* en pseudo asynchrone
+                // Démarrage de l'algorithme A* en pseudo asynchrone
                 StartCoroutine("AStar");
             }
         }
@@ -105,8 +105,8 @@ public class MainScript : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // Pour faire en sorte que l'algorithme puisse continuer d'Ãªtre actif mÃªme
-        // en tÃ¢che de fond.
+        // Pour faire en sorte que l'algorithme puisse continuer d'être actif même
+        // en tâche de fond.
         Application.runInBackground = true;
     }
 public IEnumerator StartGenetic()
@@ -130,7 +130,7 @@ public IEnumerator StartGenetic()
 			Debug.Log("Valeur Population : "+population);
 			_csvLog = i+";"+fitness+";"+population+";"+mutation+";";
 		
-					//on ajoute d'un pas a chauqe iteration gÃ©nÃ©rale
+					//on ajoute d'un pas a chauqe iteration générale
 			yield return StartCoroutine(GeneticAlgorithm(population,mutation,fitness,mutationSequence));		
 					fitness = fitness +fitnessPas;
 					mutation = mutation +mutatonPas;
@@ -141,54 +141,54 @@ public IEnumerator StartGenetic()
 	
     
     /// <summary>
-    /// ImplÃ©mentation possible de la recherche locale naÃ¯ve
+    /// Implémentation possible de la recherche locale naïve
     /// sous forme de coroutine pour le mode pseudo asynchone
     /// </summary>
     /// <returns></returns>
     public IEnumerator NaiveLocalSearch()
     {
-        // Indique que l'algorithme est en cours d'exÃ©cution
+        // Indique que l'algorithme est en cours d'exécution
         _isRunning = true;
 		DateTime time = DateTime.Now;
-        // GÃ©nÃ¨re une solution initiale au hazard (ici une sÃ©quence
+        // Génère une solution initiale au hazard (ici une séquence
         // de 42 mouvements)
         var currentSolution = new PathSolutionScript(42);
 		    int iterations = 0;
 
-        // RÃ©cupÃ¨re le score de la solution initiale
-        // Sachant que l'Ã©valuation peut nÃ©cessiter une 
+        // Récupère le score de la solution initiale
+        // Sachant que l'évaluation peut nécessiter une 
         // simulation, pour pouvoir la visualiser nous
-        // avons recours Ã  une coroutine
+        // avons recours à une coroutine
         var scoreEnumerator = GetError(currentSolution,time,iterations);
         yield return StartCoroutine(scoreEnumerator);
         float currentError = scoreEnumerator.Current;
 
-        // Nous rÃ©cupÃ©rons l'erreur minimum atteignable
-        // Ceci est optionnel et dÃ©pendant de la fonction
+        // Nous récupérons l'erreur minimum atteignable
+        // Ceci est optionnel et dépendant de la fonction
         // d'erreur
         var minimumError = GetMinError();
 
         // Affichage de l'erreur initiale
         Debug.Log(currentError);
 
-        // Initialisation du nombre d'itÃ©rations
+        // Initialisation du nombre d'itérations
     
         // Tout pendant que l'erreur minimale n'est pas atteinte
         while (currentError != GetMinError())
         {
             // On obtient une copie de la solution courante
             // pour ne pas la modifier dans le cas ou la modification
-            // ne soit pas conservÃ©e.
+            // ne soit pas conservée.
             var newsolution = CopySolution(currentSolution);
 
-            // On procÃ¨de Ã  une petite modification de la solution
+            // On procède à une petite modification de la solution
             // courante.
             RandomChangeInSolution(newsolution);
 
-            // RÃ©cupÃ¨re le score de la nouvelle solution
-            // Sachant que l'Ã©valuation peut nÃ©cessiter une 
+            // Récupère le score de la nouvelle solution
+            // Sachant que l'évaluation peut nécessiter une 
             // simulation, pour pouvoir la visualiser nous
-            // avons recours Ã  une coroutine
+            // avons recours à une coroutine
             var newscoreEnumerator = GetError(newsolution,time,iterations);
             yield return StartCoroutine(newscoreEnumerator);
             float newError = newscoreEnumerator.Current;
@@ -198,31 +198,31 @@ public IEnumerator StartGenetic()
             // nouvelle erreur
             Debug.Log(currentError + "   -   " + newError);
 
-            // Si la solution a Ã©tÃ© amÃ©liorÃ©e
+            // Si la solution a été améliorée
             if (newError <= currentError)
             {
-                // On met Ã  jour la solution courante
+                // On met à jour la solution courante
                 currentSolution = newsolution;
 
-                // On met Ã  jour l'erreur courante
+                // On met à jour l'erreur courante
                 currentError = newError;
             }
 
-            // On incrÃ©mente le nombre d'itÃ©rations
+            // On incrémente le nombre d'itérations
             iterations++;
 
             // On rend la main au moteur Unity3D
             yield return 0;
         }
 
-        // Fin de l'algorithme, on indique que son exÃ©cution est stoppÃ©e
+        // Fin de l'algorithme, on indique que son exécution est stoppée
         _isRunning = false;
 
-        // On affiche le nombre d'itÃ©rations nÃ©cessaire Ã  l'algorithme pour trouver la solution
+        // On affiche le nombre d'itérations nécessaire à l'algorithme pour trouver la solution
         Debug.Log("CONGRATULATIONS !!! Solution Found in " + iterations + " iterations !");
     }
 
-    // Coroutine Ã  utiliser pour implÃ©menter l'algorithme de Djikstra
+    // Coroutine à utiliser pour implémenter l'algorithme de Djikstra
     public IEnumerator Djikstra()
     {
         var matrix = MatrixFromRaycast.CreateMatrixFromRayCast();
@@ -232,22 +232,38 @@ public IEnumerator StartGenetic()
         yield return null;
     }
 
-    // Coroutine Ã  utiliser pour implÃ©menter l'algorithme d' A*
+    // Coroutine à utiliser pour implémenter l'algorithme d' A*
     public IEnumerator AStar()
     {
-        //TODO
+        // on crée une matrice a 3 dimenstion contenant nos noeud initialisés
+		int[][][] nodes = new int[50][][];
+		//On crée la matrice et on initialise a -1
+		for(int i=0;i < 50;i++){
+		nodes[i] = new int[50][];
+			for(int j=0;j < 50;j++){
+			nodes[i][j]= new int[3];
+			nodes[i][j][0]=-1;
+			}
+		}
+		//On récupere la position de départ 
+		var player = PlayerScript.CreatePlayer();
+		Debug.Log(player.PlayerXPositionInMatrix);
+		Debug.Log(player.PlayerYPositionInMatrix);
+		//On met l'emplacement de départ a 0
+		nodes[player.PlayerXPositionInMatrix][player.PlayerYPositionInMatrix][0]=0;
 		
+	
         yield return null;
     }
 
-    // Coroutine Ã  utiliser pour implÃ©menter l'algorithme du recuit simulÃ©
+    // Coroutine à utiliser pour implémenter l'algorithme du recuit simulé
     public IEnumerator SimulatedAnnealing()
     {
 		
 		/*
 		 * 
-		 * ImplÃ©mentation Christophe
-		 * ImplÃ©mentation du Recuit SimulÃ©
+		 * Implémentation Christophe
+		 * Implémentation du Recuit Simulé
 		 * Lire le README AVANT modification
 		 * 
 		 */
@@ -255,36 +271,36 @@ public IEnumerator StartGenetic()
 
 		DateTime time = DateTime.Now;
 		DateTime timeEnd = time.AddMinutes(5);
-		// Indique que l'algorithme est en cours d'exÃ©cution
+		// Indique que l'algorithme est en cours d'exécution
         _isRunning = true;
 		
-		//GÃ©nÃ©ration de la meilleure erreur obtenue
+		//Génération de la meilleure erreur obtenue
 		var minimumError = GetMinError();
 		var nbPath = 42;
 		
-		// GÃ©nÃ¨re une solution initiale au hazard (ici une sÃ©quence
+		// Génère une solution initiale au hazard (ici une séquence
         // de 42 mouvements)
         var currentSolution = new PathSolutionScript(nbPath);
 		int iterations = 0;	
-		// RÃ©cupÃ¨re le score de la solution initiale
-        // Sachant que l'Ã©valuation peut nÃ©cessiter une 
+		// Récupère le score de la solution initiale
+        // Sachant que l'évaluation peut nécessiter une 
         // simulation, pour pouvoir la visualiser nous
-        // avons recours Ã  une coroutine
+        // avons recours à une coroutine
         var scoreEnumerator = GetError(currentSolution,time,iterations);
         yield return StartCoroutine(scoreEnumerator);
         float currentError = scoreEnumerator.Current;
 		
-		//Initialisation de la tempÃ©rature Ã  une valeur 'plutot basse'.
+		//Initialisation de la température à une valeur 'plutot basse'.
         float temperature = 2f;
 		
-		///Initialisation de la valeur de 'stagnation' qui si elle dÃ©passe un
-        ///certain seuil provoquera l'augmentation de la tempÃ©rature.
+		///Initialisation de la valeur de 'stagnation' qui si elle dépasse un
+        ///certain seuil provoquera l'augmentation de la température.
         float stagnation = 0.001f;
 		
 		// Affichage de l'erreur initiale
         Debug.Log(currentError);
 		
-		// Initialisation du nombre d'itÃ©rations
+		// Initialisation du nombre d'itérations
 
 
         // Tout pendant que l'erreur minimale n'est pas atteinte
@@ -293,17 +309,17 @@ public IEnumerator StartGenetic()
 		
 			// On obtient une copie de la solution courante
             // pour ne pas la modifier dans le cas ou la modification
-            // ne soit pas conservÃ©e.
+            // ne soit pas conservée.
             var newsolution = CopySolution(currentSolution);
 
-            // On procÃ¨de Ã  une petite modification de la solution
+            // On procède à une petite modification de la solution
             // courante.
             RandomChangeInSolution(newsolution);
 			
-			// RÃ©cupÃ¨re le score de la nouvelle solution
-            // Sachant que l'Ã©valuation peut nÃ©cessiter une 
+			// Récupère le score de la nouvelle solution
+            // Sachant que l'évaluation peut nécessiter une 
             // simulation, pour pouvoir la visualiser nous
-            // avons recours Ã  une coroutine
+            // avons recours à une coroutine
             var newscoreEnumerator = GetError(newsolution,time,iterations);
             yield return StartCoroutine(newscoreEnumerator);
             float newError = newscoreEnumerator.Current;
@@ -313,21 +329,21 @@ public IEnumerator StartGenetic()
             // nouvelle erreur
             Debug.Log(currentError + "   -   " + newError);
 			Debug.Log("L'erreur min est :" + minimumError);
-            Debug.Log("Le nombre d'itÃ©rations est de " + iterations);
+            Debug.Log("Le nombre d'itérations est de " + iterations);
 			
 			
-			///Tirage d'un nombre alÃ©atoire entre 0f et 1f.
+			///Tirage d'un nombre aléatoire entre 0f et 1f.
             float rdm = UnityEngine.Random.Range(0f, 1f);
 			
-			///Comparaison de ce nombre Ã  la probabilitÃ© d'accepter un changement
-            ///dÃ©terminÃ©e par le critÃ¨re de Boltzman.
+			///Comparaison de ce nombre à la probabilité d'accepter un changement
+            ///déterminée par le critère de Boltzman.
             if (rdm < BoltzmanCriteria(temperature, currentError, newError))
             {
-                ///Si le nombre est infÃ©rieur, on accepte la solution changÃ©e
-                ///et l'on met Ã  jour l'erreur courante.
+                ///Si le nombre est inférieur, on accepte la solution changée
+                ///et l'on met à jour l'erreur courante.
                 currentError = newError;
 				
-				//Bien Ã©videment la solution devient la copie de l'ancienne solution
+				//Bien évidement la solution devient la copie de l'ancienne solution
 				currentSolution = newsolution;
 				
             }
@@ -335,43 +351,43 @@ public IEnumerator StartGenetic()
 			///Si l'erreur stagne
             if (minimumError == currentError)
             {
-                ///On incrÃ©mente la stagnation
+                ///On incrémente la stagnation
                 stagnation *= 1.001f;
             }
             else
             {
-                ///Sinon on la rÃ©initialise
+                ///Sinon on la réinitialise
                 stagnation = 0.001f;
             }
 			
-			///Si l'erreur diminue en deÃ§a de la meilleure erreur obtenue
+			///Si l'erreur diminue en deça de la meilleure erreur obtenue
             if (currentError < minimumError)
             {
-                ///On met Ã  jour la meilleure erreur obtenue
+                ///On met à jour la meilleure erreur obtenue
 				///Passage de minimumError en Float
 				float minimumErrorF = minimumError;
                 minimumErrorF = currentError;
 
-                ///On rÃ©initialise la stagnation
+                ///On réinitialise la stagnation
                 stagnation = 0.001f;
             }
 			
-			///On met Ã  jour la temperature Ã  chaque tour de boucle :
+			///On met à jour la temperature à chaque tour de boucle :
             /// - si la stagnation est suffisante la temperature va augmenter
-            /// - sinon la temperature dÃ©croit de maniÃ¨re gÃ©omÃ©trique
+            /// - sinon la temperature décroit de manière géométrique
             temperature *= 0.998f + stagnation;
 
             ///Affichage dans la console de Debug du couple temperature stagnation
-            ///pour pouvoir Ãªtre tÃ©moin de l'augmentation de la tempÃ©rature lorsque
-            ///l'on se retrouve coincÃ© trop longtemps dans un minimum local.
+            ///pour pouvoir être témoin de l'augmentation de la température lorsque
+            ///l'on se retrouve coincé trop longtemps dans un minimum local.
             Debug.Log(temperature + "  -  " + stagnation);
 
-            ///On rend la main Ã  Unity pendant un court laps de temps pour permettre
-            ///le contrÃ´le de la simulation ainsi que la visualisation de l'Ã©volution
+            ///On rend la main à Unity pendant un court laps de temps pour permettre
+            ///le contrôle de la simulation ainsi que la visualisation de l'évolution
             ///de l'algorithme.
             yield return new WaitForSeconds(0.0001f);
 			
-			// On incrÃ©mente le nombre d'itÃ©rations
+			// On incrémente le nombre d'itérations
             iterations++;
 
             // On rend la main au moteur Unity3D
@@ -379,13 +395,13 @@ public IEnumerator StartGenetic()
 			
 		}
 		
-		// Fin de l'algorithme, on indique que son exÃ©cution est stoppÃ©e
+		// Fin de l'algorithme, on indique que son exécution est stoppée
         _isRunning = false;
 		
 		TimeSpan simulation = DateTime.Now - time;
 		string localCsvLine = _csvLog;
 		if(DateTime.Compare(DateTime.Now,timeEnd)<0){
-        // On affiche le nombre d'itÃ©rations nÃ©cessaire Ã  l'algorithme pour trouver la solution
+        // On affiche le nombre d'itérations nécessaire à l'algorithme pour trouver la solution
         Debug.Log("CONGRATULATIONS !!! Solution Found in " + iterations + " iterations !");
 		localCsvLine += "00:00:"+simulation.TotalSeconds+";"+iterations+";Optimal;\n";
 		Debug.Log("En "+ simulation.TotalSeconds + " secondes !");
@@ -401,33 +417,33 @@ public IEnumerator StartGenetic()
 	float BoltzmanCriteria(float temperature, float currentError, float newError)
     {
         ///Si la temperature est nulle
-        ///cas particulier pour Ã©viter une division par zÃ©ro
+        ///cas particulier pour éviter une division par zéro
         if (temperature == 0)
         {
             return currentError - newError;
         }
 
-        ///CritÃ¨re de Boltzman
+        ///Critère de Boltzman
         return Mathf.Exp(((float)(currentError - newError)) / temperature);
     }
 	
-	// Coroutine Ã  utiliser pour implÃ©menter un algorithme gÃ©nÃ©tique
+	// Coroutine à utiliser pour implémenter un algorithme génétique
     public IEnumerator GeneticAlgorithm(int popsize,float mutationRate,float fitness,int mutationSequence)
     {
         
 		int iteration = 0;
 		DateTime time = DateTime.Now;
 		DateTime timeEnd = time.AddMinutes(5);
-		#region ParamÃ¨tres
+		#region Paramètres
 		
 		///La taille de la population
 
 
-        ///Le nombre d'individus sÃ©lÃ©ctionnÃ©s pour la reproduction
+        ///Le nombre d'individus séléctionnés pour la reproduction
         ///(ici 40% de la taille de la population)
         int numSelection = (int)(popsize * fitness);
 
-        ///Le taux de mutation (c.Ã .d. la chance avec laquelle un
+        ///Le taux de mutation (c.à.d. la chance avec laquelle un
         ///individu issu du croisement peut subir une mutation)
 
 		
@@ -444,7 +460,7 @@ public IEnumerator StartGenetic()
 		///Initialisation du tableau contenant notre population initiale
 		PathSolutionScript[] population = new PathSolutionScript[popsize];
 		
-		//GÃ©nÃ©ration de la meilleure erreur obtenue
+		//Génération de la meilleure erreur obtenue
 		var minimumError = GetMinError();
 		Debug.Log("Minimum Error to Win : " + minimumError);
 		int nbPath = 42;
@@ -456,10 +472,10 @@ public IEnumerator StartGenetic()
 
 
 		
-		// RÃ©cupÃ¨re le score de la solution initiale
-        // Sachant que l'Ã©valuation peut nÃ©cessiter une 
+		// Récupère le score de la solution initiale
+        // Sachant que l'évaluation peut nécessiter une 
         // simulation, pour pouvoir la visualiser nous
-        // avons recours Ã  une coroutine
+        // avons recours à une coroutine
         var scoreEnumerator = GetError(currentSol,time,iteration);
         yield return StartCoroutine(scoreEnumerator);
         float currentError = scoreEnumerator.Current;
@@ -468,7 +484,7 @@ public IEnumerator StartGenetic()
 		
 		for (int i = 0; i < popsize; i++)
         {
-			//On gÃ©nÃ¨re une solution
+			//On génère une solution
 			population[i] = new PathSolutionScript(nbPath);			
 			 
 		}
@@ -478,14 +494,14 @@ public IEnumerator StartGenetic()
 		while (bestError != GetMinError() && DateTime.Compare(DateTime.Now,timeEnd)<0)
 		{
 			
-			///Initialisation du tableau destinÃ© Ã  contenir l'ensemble des
-            ///couples chemin/erreur une fois la population Ã©valuÃ©e
+			///Initialisation du tableau destiné à contenir l'ensemble des
+            ///couples chemin/erreur une fois la population évaluée
             var scoredIndividuals = new ScoredIndividual[popsize];
 			
 			currentSol = new PathSolutionScript(nbPath);
 			
 			
-            ///Pour chaque individu de notre population Ã  Ã©valuer
+            ///Pour chaque individu de notre population à évaluer
 			for (int i = 0; i < population.Length; i++)
             {
 			
@@ -498,8 +514,8 @@ public IEnumerator StartGenetic()
         		yield return StartCoroutine(scoreEnumerator);
         		currentError = scoreEnumerator.Current;
 				
-				///CrÃ©ation d'un couple configuration/solution et stockage
-                ///du score obtenu pour la configuration Ã©valuÃ©e.
+				///Création d'un couple configuration/solution et stockage
+                ///du score obtenu pour la configuration évaluée.
 				scoredIndividuals[i] = new ScoredIndividual()
                 {
                     Configuration = population[i],
@@ -512,7 +528,7 @@ public IEnumerator StartGenetic()
 			//selection par tournoi 
 			PathSolutionScript[] bestIndividuals = new PathSolutionScript[popsize];
 			for(int i=0;i< popsize;i++){
-			////si l'individu testÃ© est moins bon que l'alÃ©atoire
+			////si l'individu testé est moins bon que l'aléatoire
 			int rand = UnityEngine.Random.Range(0,scoredIndividuals.Length);
 			if(scoredIndividuals[i].Score >  scoredIndividuals[rand].Score)
 			{
@@ -539,23 +555,23 @@ public IEnumerator StartGenetic()
 			       
             ///Affichage Dans la console de Debug du score du meilleur
             ///individu.
-            Debug.Log("Meilleur Score de la gÃ©nÃ©ration courante : " + bestError);
+            Debug.Log("Meilleur Score de la génération courante : " + bestError);
 			
 	
-			///Initialisation de la nouvelle population qui va Ãªtre gÃ©nÃ©rÃ©e
+			///Initialisation de la nouvelle population qui va être générée
     		///par croisement.
     		PathSolutionScript[] newpopulation = new PathSolutionScript[popsize];
 	
 	
-			///Pour chaque enfant que l'on doit gÃ©nÃ©rer par croisement
+			///Pour chaque enfant que l'on doit générer par croisement
     		for (int i = 0; i < popsize; i++)
 			{
 		
-			 	///RÃ©cupÃ©ration de deux reproduteurs au hasard
+			 	///Récupération de deux reproduteurs au hasard
              	var parent1 = bestIndividuals[UnityEngine.Random.Range(0, bestIndividuals.Length)];
              	var parent2 = bestIndividuals[UnityEngine.Random.Range(0, bestIndividuals.Length)];
 	
-             	///CrÃ©ation d'un individu Ã  partir du croisement des deux parents
+             	///Création d'un individu à partir du croisement des deux parents
              	newpopulation[i] = Crossover(parent1, parent2, nbPath);
 			}
 			
@@ -566,11 +582,11 @@ public IEnumerator StartGenetic()
             	float rdm = UnityEngine.Random.Range(0f, 1f);
 	            
 				///Comparaison de ce nombre au taux de mutation
-            	///S'il est infÃ©rieur, on procÃ¨de Ã  la mutation
+            	///S'il est inférieur, on procède à la mutation
             	if (rdm < mutationRate)
 				{
-	            	///Mutation proposÃ©e :
-                	// On procÃ¨de Ã  une petite modification de la solution
+	            	///Mutation proposée :
+                	// On procède à une petite modification de la solution
                 	// courante.
 					for(int j=0;j<mutationSequence;j++){
                 	RandomChangeInSolution(newpopulation[i+j]);
@@ -582,18 +598,18 @@ public IEnumerator StartGenetic()
 				
 			iteration++;
 			
-			Debug.Log("Le nombre d'itÃ©rations est de : " + iteration);
+			Debug.Log("Le nombre d'itérations est de : " + iteration);
 	
         	// On rend la main au moteur Unity3D
         	yield return 0;
     	}
-	   	// Fin de l'algorithme, on indique que son exÃ©cution est stoppÃ©e
+	   	// Fin de l'algorithme, on indique que son exécution est stoppée
        	_isRunning = false;
 	
        	TimeSpan simulation = DateTime.Now - time;
 		string localCsvLine = _csvLog;
 		if(DateTime.Compare(DateTime.Now,timeEnd)<0){
-	        // On affiche le nombre d'itÃ©rations nÃ©cessaire Ã  l'algorithme pour trouver la solution
+	        // On affiche le nombre d'itérations nécessaire à l'algorithme pour trouver la solution
 	        Debug.Log("CONGRATULATIONS !!! Solution Found in " + iteration + " iterations !");
 			localCsvLine += "00:00:"+simulation.TotalSeconds+";"+iteration+";Optimal;\n";
 			Debug.Log("En "+ simulation.TotalSeconds + " secondes !");
@@ -605,9 +621,9 @@ public IEnumerator StartGenetic()
 	    	
 	}
 		/// <summary>
-    /// Structure de donnÃ©e crÃ©Ã©e pour pouvoir stocker les 
-    /// associations configuration/score lors de l'Ã©tape
-    /// d'Ã©valuation de la population.
+    /// Structure de donnée créée pour pouvoir stocker les 
+    /// associations configuration/score lors de l'étape
+    /// d'évaluation de la population.
     /// </summary>
     class ScoredIndividual
     {
@@ -623,12 +639,12 @@ public IEnumerator StartGenetic()
     }
 	
 	    /// <summary>
-    /// MÃ©thode proposant une mÃ©thode pour obtenir une nouvel
+    /// Méthode proposant une méthode pour obtenir une nouvel
     /// individu par croisement de deux configurations parentes
     /// </summary>
     /// <param name="parent1">Le parent 1</param>
     /// <param name="parent2">Le parent 2</param>
-    /// <returns>L'enfant gÃ©nÃ©rÃ© par croisement</returns>
+    /// <returns>L'enfant généré par croisement</returns>
     PathSolutionScript Crossover(PathSolutionScript parent1, PathSolutionScript parent2, int length)
     {
         PathSolutionScript child = new PathSolutionScript(length);
@@ -641,8 +657,8 @@ public IEnumerator StartGenetic()
     }
 
     /// <summary>
-    /// Exemple d'erreur minimum (pas forcÃ©ment toujours juste) renvoyant
-    /// la distance de manhattan entre la case d'arrivÃ©e et la case de dÃ©part.
+    /// Exemple d'erreur minimum (pas forcément toujours juste) renvoyant
+    /// la distance de manhattan entre la case d'arrivée et la case de départ.
     /// </summary>
     /// <returns></returns>
     int GetMinError()
@@ -653,58 +669,58 @@ public IEnumerator StartGenetic()
 
     /// <summary>
     /// Exemple d'oracle nous renvoyant un score que l'on essaye de minimiser
-    /// Ici est utilisÃ© la position de la case d'arrivÃ©e, la position finale
-    /// atteinte par la solution. Il est recommandÃ© d'essayer plusieurs oracles
-    /// pour Ã©tudier le comportement des algorithmes selon la qualitÃ© de ces
+    /// Ici est utilisé la position de la case d'arrivée, la position finale
+    /// atteinte par la solution. Il est recommandé d'essayer plusieurs oracles
+    /// pour étudier le comportement des algorithmes selon la qualité de ces
     /// derniers
     /// 
-    /// Parmi les paramÃ¨tres pouvant Ãªtre utilisÃ©s pour calculer le score/erreur :
+    /// Parmi les paramètres pouvant être utilisés pour calculer le score/erreur :
     /// 
-    ///  - position de la case d'arrivÃ©e    : PlayerScript.GoalXPositionInMatrix
+    ///  - position de la case d'arrivée    : PlayerScript.GoalXPositionInMatrix
     ///                                       PlayerScript.GoalYPositionInMatrix
     ///  - position du joueur               : player.PlayerXPositionInMatrix
     ///                                       player.PlayerYPositionInMatrix
-    ///  - position de dÃ©part du joueur     : PlayerScript.StartXPositionInMatrix
+    ///  - position de départ du joueur     : PlayerScript.StartXPositionInMatrix
     ///                                       PlayerScript.StartYPositionInMatrix
-    ///  - nombre de cases explorÃ©es        : player.ExploredPuts
-    ///  - nombre d'actions exÃ©cutÃ©es       : player.PerformedActionsNumber
-    ///  - vrai si le la balle a touchÃ© la case d'arrivÃ©e : player.FoundGoal
-    ///  - vrai si le la balle a touchÃ© un obstacle : player.FoundObstacle
+    ///  - nombre de cases explorées        : player.ExploredPuts
+    ///  - nombre d'actions exécutées       : player.PerformedActionsNumber
+    ///  - vrai si le la balle a touché la case d'arrivée : player.FoundGoal
+    ///  - vrai si le la balle a touché un obstacle : player.FoundObstacle
     ///  - interrogation de la matrice      :
-    ///       Â€ la case de coordonnÃ©e (i, j) est elle un obstacle (i et j entre 0 et 49) :
+    ///       € la case de coordonnée (i, j) est elle un obstacle (i et j entre 0 et 49) :
     ///           player.GetPutTypeAtCoordinates(i, j) == LayerMask.NameToLayer("Obstacle")
-    ///       Â€ la case de coordonnÃ©e (i, j) est elle explorÃ©e (i et j entre 0 et 49) :
+    ///       € la case de coordonnée (i, j) est elle explorée (i et j entre 0 et 49) :
     ///           player.GetPutTypeAtCoordinates(i, j) == 1
-    ///       Â€ la case de coordonnÃ©e (i, j) est elle inexplorÃ©e (i et j entre 0 et 49) :
+    ///       € la case de coordonnée (i, j) est elle inexplorée (i et j entre 0 et 49) :
     ///           player.GetPutTypeAtCoordinates(i, j) == 0
     /// </summary>
     /// <param name="solution"></param>
     /// <returns></returns>
     IEnumerator<float> GetError(PathSolutionScript solution, System.DateTime time,int iteration)
     {
-        // On indique que l'on s'apprÃªte Ã  lancer la simulation
+        // On indique que l'on s'apprête à lancer la simulation
         _inSimulation = true;
 
-        // On crÃ©Ã© notre objet que va exÃ©cuter notre sÃ©quence d'action
+        // On créé notre objet que va exécuter notre séquence d'action
         var player = PlayerScript.CreatePlayer();
 
         // Pour pouvoir visualiser la simulation (moins rapide)
         player.RunWithoutSimulation = false;
 
-        // On lance la simulation en spÃ©cifiant
-        // la sÃ©quence d'action Ã  exÃ©cuter
+        // On lance la simulation en spécifiant
+        // la séquence d'action à exécuter
         player.LaunchSimulation(solution);
 
-        // Tout pendant que la simulation n'est pas terminÃ©e
+        // Tout pendant que la simulation n'est pas terminée
         while (player.InSimulation)
         {
             // On rend la main au moteur Unity3D
             yield return -1f;
         }        
 
-        // Calcule la distance de Manhattan entre la case d'arrivÃ©e et la case finale de
-        // notre objet, la pondÃ¨re (la multiplie par zÃ©ro si le but a Ã©tÃ© trouvÃ©) 
-        // et ajoute le nombre d'actions jouÃ©es
+        // Calcule la distance de Manhattan entre la case d'arrivée et la case finale de
+        // notre objet, la pondère (la multiplie par zéro si le but a été trouvé) 
+        // et ajoute le nombre d'actions jouées
         var error = (Mathf.Abs(PlayerScript.GoalXPositionInMatrix - player.PlayerXPositionInMatrix)
             + Mathf.Abs(PlayerScript.GoalYPositionInMatrix - player.PlayerYPositionInMatrix)) 
             * (player.FoundGoal ? 0 : 100)  + 
@@ -724,13 +740,13 @@ public IEnumerator StartGenetic()
 			}
 			}
 		
-        // DÃ©truit  l'objet de la simulation
+        // Détruit  l'objet de la simulation
         Destroy(player.gameObject);
 
-        // Renvoie l'erreur prÃ©cÃ©demment calculÃ©e
+        // Renvoie l'erreur précédemment calculée
         yield return error;
 
-        // Indique que la phase de simulation est terminÃ©e
+        // Indique que la phase de simulation est terminée
         _inSimulation = false;
     }
 	
@@ -738,20 +754,20 @@ public IEnumerator StartGenetic()
 	///<summary>
 	/// Oracle pour Astar
 	/// Il calcule simplement la distance manhattan 
-	/// mais n'ajoute pas 100 si le goal n'est pas trouvÃ©.
-	/// Il sera appelÃ© pour chaque case pour determiner sa valeur.
+	/// mais n'ajoute pas 100 si le goal n'est pas trouvé.
+	/// Il sera appelé pour chaque case pour determiner sa valeur.
 	///</summary>
 	 IEnumerator<float> GetAstarError(PathSolutionScript solution, System.DateTime time,int iteration)
     {
-        // On indique que l'on s'apprÃªte Ã  lancer la simulation
+        // On indique que l'on s'apprête à lancer la simulation
         //_inSimulation = true;
 
-        // On crÃ©Ã© notre objet que va exÃ©cuter notre sÃ©quence d'action
+        // On créé notre objet que va exécuter notre séquence d'action
         var player = PlayerScript.CreatePlayer();
 
-        // Calcule la distance de Manhattan entre la case d'arrivÃ©e et la case finale de
-        // notre objet, la pondÃ¨re (la multiplie par zÃ©ro si le but a Ã©tÃ© trouvÃ©) 
-        // et ajoute le nombre d'actions jouÃ©es
+        // Calcule la distance de Manhattan entre la case d'arrivée et la case finale de
+        // notre objet, la pondère (la multiplie par zéro si le but a été trouvé) 
+        // et ajoute le nombre d'actions jouées
         var error = (Mathf.Abs(PlayerScript.GoalXPositionInMatrix - player.PlayerXPositionInMatrix)
             + Mathf.Abs(PlayerScript.GoalYPositionInMatrix - player.PlayerYPositionInMatrix));
 		
@@ -769,19 +785,19 @@ public IEnumerator StartGenetic()
 			}
 			}
 		
-        // DÃ©truit  l'objet de la simulation
+        // Détruit  l'objet de la simulation
         Destroy(player.gameObject);
 
-        // Renvoie l'erreur prÃ©cÃ©demment calculÃ©e
+        // Renvoie l'erreur précédemment calculée
         yield return error;
 
-        // Indique que la phase de simulation est terminÃ©e
+        // Indique que la phase de simulation est terminée
         _inSimulation = false;
     }
 
     /// <summary>
-    /// Execute un changement alÃ©atoire sur une solution
-    /// ici, une action de la sÃ©quence est tirÃ©e au hasard et remplacÃ©e
+    /// Execute un changement aléatoire sur une solution
+    /// ici, une action de la séquence est tirée au hasard et remplacée
     /// par une nouvelle au hasard.
     /// </summary>
     /// <param name="sol"></param>
@@ -792,24 +808,24 @@ public IEnumerator StartGenetic()
 
     /// <summary>
     /// Fonction utilitaire ayant pour but de copier
-    /// dans un nouvel espace mÃ©moire une solution
+    /// dans un nouvel espace mémoire une solution
     /// </summary>
-    /// <param name="sol">La solution Ã  copier</param>
+    /// <param name="sol">La solution à copier</param>
     /// <returns>Une copie de la solution</returns>
     public PathSolutionScript CopySolution(PathSolutionScript sol)
     {
-        // Initialisation de la nouvelle sÃ©quence d'action
-        // de la mÃªme longueur que celle que l'on souhaite copier
+        // Initialisation de la nouvelle séquence d'action
+        // de la même longueur que celle que l'on souhaite copier
         var newSol = new PathSolutionScript(sol.Actions.Length);
 
-        // Pour chaque action de la sÃ©quence originale,
+        // Pour chaque action de la séquence originale,
         // on copie le type d'action.
         for (int i = 0; i < sol.Actions.Length; i++)
         {
             newSol.Actions[i].Action = sol.Actions[i].Action;
         }
 
-        // Renvoi de la solution copiÃ©e
+        // Renvoi de la solution copiée
         return newSol;
     }
 }

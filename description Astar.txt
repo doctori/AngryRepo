@@ -1,4 +1,6 @@
 ﻿Dans un premier temps il est necessaire de créer une matrice contenant l'ensemble de nos coordonées,
 On crée une matrice a 3 dimension contenant l'ensemble de nos noeud ainsi que leur valeur intialisé a l'infini (-1 ?) 
-une matrice de 50x50 (car le terrain es tlimité a 50)
+une matrice de 50x50 (car le terrain est limité a 50)
+on a une matrice a trois dimenstion de cette structure :
+[PositionX][PositionY][g_score,f_score];
 
