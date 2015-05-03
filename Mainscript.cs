@@ -134,6 +134,7 @@ public IEnumerator StartGenetic()
 			yield return StartCoroutine(GeneticAlgorithm(population,mutation,fitness,mutationSequence));		
 					fitness = fitness +fitnessPas;
 					mutation = mutation +mutatonPas;
+					mutationSequence = mutationSequence + mutationSequencePas;
 					population = population + populationPas;
 		
 					}
@@ -225,9 +226,6 @@ public IEnumerator StartGenetic()
     // Coroutine à utiliser pour implémenter l'algorithme de Djikstra
     public IEnumerator Djikstra()
     {
-        var matrix = MatrixFromRaycast.CreateMatrixFromRayCast();
-
-
         //TODO
         yield return null;
     }
@@ -237,25 +235,87 @@ public IEnumerator StartGenetic()
     {
         // on crée une matrice a 3 dimenstion contenant nos noeud initialisés
 		int[][][] nodes = new int[50][][];
+		//on créer un objet qui contiendra notre valeur courante
+		int[] current = new int[3];
+		//Tableau contenant les coordonées x,Y du current.
+		int[] currentCoords = new int[2];
+		
 		//On crée la matrice et on initialise a -1
 		for(int i=0;i < 50;i++){
 		nodes[i] = new int[50][];
 			for(int j=0;j < 50;j++){
 			nodes[i][j]= new int[3];
-			nodes[i][j][0]=-1;
+			//On definit un f_score virtuellement infini
+			nodes[i][j][0]=999;
+			//On défini chaque elemlent de la matrice en tant que openSet (1=open 0 = close)
+			nodes[i][j][2]=1;
 			}
 		}
 		//On récupere la position de départ 
 		var player = PlayerScript.CreatePlayer();
 		Debug.Log(player.PlayerXPositionInMatrix);
 		Debug.Log(player.PlayerYPositionInMatrix);
-		//On met l'emplacement de départ a 0
+		//On définit le f_score de départ a 0
 		nodes[player.PlayerXPositionInMatrix][player.PlayerYPositionInMatrix][0]=0;
-		
-	
+		//On calcule le g_score (fscore+heuristique)
+		nodes[player.PlayerXPositionInMatrix][player.PlayerYPositionInMatrix][1]=nodes[player.PlayerXPositionInMatrix][player.PlayerYPositionInMatrix][0]+GetAstarError(player);	
+		Debug.Log(IsOpenSetEmpty(nodes));
+		//On demare les iterations tant qu'il reste des nodes ouvers
+		while (!IsOpenSetEmpty(nodes))
+		{
+		//On recupere les coordonée du noeud avec le plus bas fscore
+		currentCoords = lowestfscore(nodes);
+			if(GetAstarError(currentCoords[0],currentCoords[1])==0)
+			{
+				Debug.Log("hurray");
+			}else{
+			//On ferme le noeud 
+			nodes[currentCoords[0]][currentCoords[1]][2]=0;
+					
+			Debug.Log("let'skeep waiting");
+			}
+		}
         yield return null;
     }
+	// utilisé pour la resolution Astar pour trester si il existe encore des nodes empty.
+	//Renvoi true si l'openset est empty
 
+	public bool IsOpenSetEmpty(int[][][] nodes)
+	{	
+		bool IsOpenSetEmpty = true;
+		for (int i = 0;i<nodes.Length;i++)
+		{
+			for (int j = 0;j<nodes.Length;j++)
+			{
+				//on test la valeur de openSet
+				if(nodes[i][j][2] == 1){
+				IsOpenSetEmpty=false;
+				break;
+				}
+			}
+		}
+		return IsOpenSetEmpty;
+	}
+	// retourne le x et y du noeud avec le fscore le plus bas
+		public int[] lowestfscore(int [][][] nodes)
+	{
+		int fNodeMin = 50*50;
+		int[] position = new int[2];
+		for (int i = 0;i<nodes.Length;i++)
+		{
+			for (int j = 0;j<nodes.Length;j++)
+			{
+				//on test la valeur de openSet
+				if(nodes[i][j][1] < fNodeMin){
+				fNodeMin = nodes[i][j][1];
+				//On met a jour les coordonées a retourner
+				position[0] = i;
+				position[1] = j;
+				}
+			}
+		}
+		return position;
+	}
     // Coroutine à utiliser pour implémenter l'algorithme du recuit simulé
     public IEnumerator SimulatedAnnealing()
     {
@@ -364,9 +424,7 @@ public IEnumerator StartGenetic()
             if (currentError < minimumError)
             {
                 ///On met à jour la meilleure erreur obtenue
-				///Passage de minimumError en Float
-				float minimumErrorF = minimumError;
-                minimumErrorF = currentError;
+				 minimumError = (int)currentError;
 
                 ///On réinitialise la stagnation
                 stagnation = 0.001f;
@@ -757,42 +815,17 @@ public IEnumerator StartGenetic()
 	/// mais n'ajoute pas 100 si le goal n'est pas trouvé.
 	/// Il sera appelé pour chaque case pour determiner sa valeur.
 	///</summary>
-	 IEnumerator<float> GetAstarError(PathSolutionScript solution, System.DateTime time,int iteration)
+	 int GetAstarError(int x, int y)
     {
-        // On indique que l'on s'apprête à lancer la simulation
-        //_inSimulation = true;
-
-        // On créé notre objet que va exécuter notre séquence d'action
-        var player = PlayerScript.CreatePlayer();
-
-        // Calcule la distance de Manhattan entre la case d'arrivée et la case finale de
-        // notre objet, la pondère (la multiplie par zéro si le but a été trouvé) 
-        // et ajoute le nombre d'actions jouées
-        var error = (Mathf.Abs(PlayerScript.GoalXPositionInMatrix - player.PlayerXPositionInMatrix)
+				var player = PlayerScript.CreatePlayer();
+				player.PlayerXPositionInMatrix= x;
+				player.PlayerYPositionInMatrix= y;
+       var error = (Mathf.Abs(PlayerScript.GoalXPositionInMatrix - player.PlayerXPositionInMatrix)
             + Mathf.Abs(PlayerScript.GoalYPositionInMatrix - player.PlayerYPositionInMatrix));
-		
-		
-		if(player.FoundGoal==true)
-		{
-			if(!_wasTrue){
-				_wasTrue = true;
-        	string localCsvLine = _csvLog;
-				TimeSpan simulation = DateTime.Now - time;
-				localCsvLine += "00:00:"+simulation.TotalSeconds+";"+iteration+";Correct;\n";
-				
-			Debug.Log("Premier True En "+ simulation.TotalSeconds + " secondes");
-			File.AppendAllText(@"log.csv",localCsvLine );
-			}
-			}
-		
         // Détruit  l'objet de la simulation
-        Destroy(player.gameObject);
+       // Renvoie l'erreur précédemment calculée
+       return error;
 
-        // Renvoie l'erreur précédemment calculée
-        yield return error;
-
-        // Indique que la phase de simulation est terminée
-        _inSimulation = false;
     }
 
     /// <summary>
