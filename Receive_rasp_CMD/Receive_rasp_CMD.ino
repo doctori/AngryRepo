@@ -44,12 +44,12 @@ void setup(){
   radio.powerUp();
   radio.printDetails();                   // Dump the configuration of the rf unit for debugging
 }
-void sendCallback(unsigned short callback){
+void sendCallback(unsigned short callback,uint8_t payloadLength){
    // First, stop listening so we can talk
       radio.stopListening();
 
       // Send the final one back.
-      radio.write( &callback, sizeof(unsigned short) );
+      radio.write( &callback, payloadLength );
       printf("Sent response. [%d] \n\r", callback);
 
       // Now, resume listening so we catch the next packets.
@@ -82,30 +82,31 @@ int getState(unsigned short pin){
   return state == true ? 0 : 1;
 }
 
-void doAction(unsigned short id, unsigned short action){
+unsigned short doAction(unsigned short id, unsigned short action){
+    unsigned short callback = 1;
     printf("The Id recieved is [%d] and the Action is : [%d] \n",id,action);
+    printf("The CallBack value is [%d]\n",callback);
     if( action == 0 ){
         digitalWrite(id, HIGH);
     }else{
         digitalWrite(id, LOW);
     }
+    return callback;
 }
 void performAction(char * received_payload, uint8_t payloadLength){
-  unsigned short action, id, callback;
+  unsigned short action, id, callback = 0;
   char * castedMessage;
   printf("Received : [%s] ",received_payload);
-  printf("\n\r TEST : [%c] \n\r",received_payload[0]);
   printf("With the Length : [%d]",payloadLength);
   action = getMessage(received_payload);
   id = getId(received_payload, payloadLength);
   printf("Action is : [%d], With Id : [%d] \n\r",action,id);
   if (action == 0 || action ==1){
-      callback = action;
-      doAction(id, action);
+      callback = doAction(id, action);
   }else if(action == 2){
       callback = getState(id);
   }
-  sendCallback(callback);
+  sendCallback(callback,payloadLength);
 
 
  
